@@ -7,7 +7,7 @@ extension TabNewsAuth on TabNews {
     required String password,
   }) async {
     final response = await _client.post(
-      apiUrl("/users"),
+      _apiUrl("/users"),
       body: {
         "username": username,
         "email": email,
