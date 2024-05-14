@@ -10,11 +10,10 @@ class TabNews {
   late final http.Client _client;
   late final ContentStrategy _contentStrategy;
 
-  TabNews({
-    http.Client? client,
-    String? baseUrl,
-    ContentStrategy? contentStrategy
-  }) {
+  TabNews(
+      {http.Client? client,
+      String? baseUrl,
+      ContentStrategy? contentStrategy}) {
     _client = client ?? http.Client();
     _baseUrl = baseUrl ?? "https://tabnews.com.br/api/v1";
     _contentStrategy = contentStrategy ?? ContentStrategy.relevantContent;

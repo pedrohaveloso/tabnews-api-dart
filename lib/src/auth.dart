@@ -1,4 +1,4 @@
-part of "package:tabnews/src/tab_news.dart";
+part of "package:tabnews/src/tabnews.dart";
 
 extension TabNewsAuth on TabNews {
   Future<Response<bool>> createUser({

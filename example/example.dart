@@ -3,7 +3,7 @@ import 'package:tabnews/src/tabnews.dart';
 void main() async {
   final tabNews = TabNews();
 
-  tabNews.setDefaultContentStrategy();
+  tabNews.setContentStrategy(ContentStrategy.relevantContent);
 
   final (_, created) = await tabNews.createUser(
     username: "username",
