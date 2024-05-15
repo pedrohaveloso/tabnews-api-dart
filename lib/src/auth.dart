@@ -17,4 +17,8 @@ extension TabNewsAuth on TabNews {
 
     return (response.statusCode, response.statusCode == 201);
   }
+
+  Future<Response<String>> loginUser() async {
+    return (200, "");
+  }
 }
