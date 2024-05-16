@@ -1,21 +1,14 @@
 import 'package:tabnews/tabnews.dart';
 
 void main() async {
-  final tabNews = TabNews()
-    ..defaultContentStrategy = ContentStrategy.newContent;
+  SimpleTabNews;
 
-  final (contents, status, error) = await tabNews.getContents(perPage: 1000);
+  final api = TabNews();
 
-  if (status) {
-    contents!.forEach(print);
-  } else {
-    print(error!.message);
-    print(error!.action);
-  }
+  final (contents, status, error) = await api.getContents(
+    page: ContentPage(10),
+    perPage: ContentPerPage(100),
+  );
 
-  // try {
-  //   final contents = await tabNews.getContentsForced(perPage: 1000);
-  // } catch (error) {
-  //   print(error);
-  // }
+  final response = await api.getContentOrThrow("user", "slug");
 }
