@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:tabnews/src/models/content_status.dart';
 import 'package:tabnews/src/tabnews.dart';
 
@@ -32,107 +31,105 @@ class Content {
   ///
   ///     import 'package:tabnews/tabnews.dart';
   ///
-  ///     var content = Content.fromJson("{\"owner_id\": \"ABC\"}");
+  ///     var content = Content.fromJson({"owner_id": "ABC"});
   ///     print(content.ownerId) // "ABC"
   ///
-  ///     content = Content.fromJson("ABC");
+  ///     content = Content.fromJson({"ABC": ""});
   ///     print(content.ownerId) // null
-  factory Content.fromJson(String json) {
-    final decoded = jsonDecode(json);
-
-    if (decoded is Map<String, dynamic>) {
+  factory Content.fromJson(Map<String, dynamic>? map) {
+    if (map == null) {
+      return Content();
+    } else {
       return Content(
-        id: decoded['id'] as String?,
-        ownerId: decoded['owner_id'] as String?,
-        parentId: decoded['parent_id'] as String?,
-        slug: decoded['slug'] as String?,
-        title: decoded['title'] as String?,
+        id: map['id'] as String?,
+        ownerId: map['owner_id'] as String?,
+        parentId: map['parent_id'] as String?,
+        slug: map['slug'] as String?,
+        title: map['title'] as String?,
         status: ContentStatus.values
-            .where((status) => status.value == decoded['status'])
+            .where((status) => status.value == map['status'])
             .first,
-        sourceUrl: decoded['source_url'] as String?,
-        ownerUsername: decoded['owner_username'] as String?,
+        sourceUrl: map['source_url'] as String?,
+        ownerUsername: map['owner_username'] as String?,
         createdAt: DateTime.tryParse(
-          decoded['created_at'] as String? ?? '',
+          map['created_at'] as String? ?? '',
         ),
         updatedAt: DateTime.tryParse(
-          decoded['updated_at'] as String? ?? '',
+          map['updated_at'] as String? ?? '',
         ),
         publishedAt: DateTime.tryParse(
-          decoded['published_at'] as String? ?? '',
+          map['published_at'] as String? ?? '',
         ),
         deletedAt: DateTime.tryParse(
-          decoded['deleted_at'] as String? ?? '',
+          map['deleted_at'] as String? ?? '',
         ),
-        tabcoins: decoded['tabcoins'] as int?,
-        tabcoinsCredit: decoded['tabcoins_credit'] as int?,
-        tabcoinsDebit: decoded['tabcoins_debit'] as int?,
-        childrenDeepCount: decoded['children_deep_count'] as int?,
+        tabcoins: map['tabcoins'] as int?,
+        tabcoinsCredit: map['tabcoins_credit'] as int?,
+        tabcoinsDebit: map['tabcoins_debit'] as int?,
+        childrenDeepCount: map['children_deep_count'] as int?,
       );
-    } else {
-      return Content();
     }
   }
 
   /// The ID of the post. Is a UUID.
-  final String? id;
+  String? id;
 
   /// The ID of the post owner. Is a UUID.
-  final String? ownerId;
+  String? ownerId;
 
   /// The ID of the parent post. Is a UUID.
-  final String? parentId;
+  String? parentId;
 
   /// The slug of the post.
   ///
   /// ### Example:
   ///
   /// Post title: `TabNews Hello World`, slug: `tabnews-hello-world`.
-  final String? slug;
+  String? slug;
 
   /// The title of the post.
-  final String? title;
+  String? title;
 
   /// The status of the post.
-  final ContentStatus? status;
+  ContentStatus? status;
 
   /// The source URL of the post.
   ///
   /// ### Examples:
   ///
   /// Post URL: https://tabnews.com.br/username/tabnews-hello-world.
-  final String? sourceUrl;
+  String? sourceUrl;
 
   /// The creation date of the post.
-  final DateTime? createdAt;
+  DateTime? createdAt;
 
   /// The last update date of the post.
-  final DateTime? updatedAt;
+  DateTime? updatedAt;
 
   /// The publication date of the post.
-  final DateTime? publishedAt;
+  DateTime? publishedAt;
 
   /// The deletion date of the post.
-  final DateTime? deletedAt;
+  DateTime? deletedAt;
 
   /// The username of the post owner.
-  final String? ownerUsername;
+  String? ownerUsername;
 
   /// The amount of tabcoins of the post.
-  final int? tabcoins;
+  int? tabcoins;
 
   /// The amount of tabcoins that was credited to the post.
-  final int? tabcoinsCredit;
+  int? tabcoinsCredit;
 
   /// The amount of tabcoins that was debited from the post.
-  final int? tabcoinsDebit;
+  int? tabcoinsDebit;
 
   /// The number of children deep of the post.
-  final int? childrenDeepCount;
+  int? childrenDeepCount;
 
-  /// Converts a [Content] to a [String] JSON value.
-  String toJson() {
-    return jsonEncode({
+  /// Converts a [Content] to a [Map] JSON value.
+  Map<String, dynamic> toMap() {
+    return {
       'id': id,
       'owner_id': ownerId,
       'parent_id': parentId,
@@ -149,6 +146,11 @@ class Content {
       'tabcoins_credit': tabcoinsCredit,
       'tabcoins_debit': tabcoinsDebit,
       'children_deep_count': childrenDeepCount,
-    });
+    };
+  }
+
+  @override
+  String toString() {
+    return toMap().toString();
   }
 }

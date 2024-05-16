@@ -1,33 +1,58 @@
-import "package:http/http.dart" as http;
-import "package:tabnews/src/types/response.dart";
+import 'dart:async';
+import 'dart:convert';
 
-part "package:tabnews/src/auth.dart";
+import 'package:http/http.dart' as http;
+import 'package:tabnews/src/models/content.dart';
+import 'package:tabnews/src/models/content_strategy.dart';
+import 'package:tabnews/src/types/response.dart';
+import 'package:tabnews/src/types/response_error.dart';
 
-enum ContentStrategy { newContent, oldContent, relevantContent }
+part 'package:tabnews/src/auth_api.dart';
+part 'package:tabnews/src/content_api.dart';
 
 class TabNews {
-  late final String _baseUrl;
-  late final http.Client _client;
-  late final ContentStrategy _contentStrategy;
+  TabNews({
+    this.authority = 'tabnews.com.br',
+    this.basePath = '/api/v1',
+    this.defaultContentStrategy = ContentStrategy.relevantContent,
+    this.defaultContentPerPage = 20,
+  });
 
-  TabNews(
-      {http.Client? client,
-      String? baseUrl,
-      ContentStrategy? contentStrategy}) {
-    _client = client ?? http.Client();
-    _baseUrl = baseUrl ?? "https://tabnews.com.br/api/v1";
-    _contentStrategy = contentStrategy ?? ContentStrategy.relevantContent;
+  ///
+  String authority;
+
+  ///
+  String basePath;
+
+  ///
+  ContentStrategy defaultContentStrategy;
+
+  ///
+  int defaultContentPerPage;
+
+  ResponseError? _getError(dynamic decodedBody) {
+    if (decodedBody is Map<String, dynamic>) {
+      return (
+        message: decodedBody['message'] as String?,
+        action: decodedBody['action'] as String?,
+      );
+    }
+
+    return null;
   }
 
-  Uri _apiUrl(path, {queryParameters = ""}) {
-    return Uri.https(_baseUrl, path, queryParameters);
+  Exception _forcedException(ResponseError? error) {
+    const message = 'Error occurred when making a call to the TabNews '
+        'API with a force function.';
+
+    return Exception([
+      '{$message}',
+      '{Message: ${error?.message ?? 'Unknown error'}}',
+      '{Action: ${error?.action ?? 'Unknown action'}}',
+    ]);
   }
 
-  void setContentStrategy(ContentStrategy contentStrategy) {
-    _contentStrategy = contentStrategy;
-  }
-
-  void close() {
-    _client.close();
+  Uri _apiUrl(String path, {Map<String, String?>? queryParameters}) {
+    return Uri.https(authority, '$basePath$path', queryParameters);
   }
 }
