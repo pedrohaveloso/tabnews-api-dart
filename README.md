@@ -1,12 +1,30 @@
-# Tabnews api dart.
+# TabNews
 
-Obtendo uma lista de conteúdos:
+Autenticação e sessões.
+
+<ul>
+  <li>✅ Criar um usuário.</li>
+  <li>✅ Logar um usuário.</li>
+  <li>✅ Recuperar senha de um usuário.</li>
+</ul>
+
+Conteúdos e posts.
+
+<ul>
+  <li>✅ Listar os conteúdos.</li>
+  <li>✅ Listar os conteúdos de um usuário.</li>
+  <li>✅ Obter os dados de um conteúdo.</li>
+  <li>✅ Listar os comentários de um conteúdo.</li>
+  <li>✅ Obter a thumbnail de um conteúdo.</li>
+</ul>
+
+## Uma breve introdução ao pacote
 
 Todos os métodos oferecidos pelo pacote possuem duas variantes:
 
-Uma comum que retornará uma tupla no formato: `(T? content, bool status, ResponseError? error)` (o tipo `ResponseError` também se trata de uma tupla, falemos dele mais a frente).
+Uma comum que retornará uma tupla no formato `(T? content, bool status, ResponseError? error)` (o tipo `ResponseError` também se trata de uma tupla, falemos dele mais a frente).
 
-A outra variante, sempre nomeada com o nome da comum seguido por "OrThrow", retornará apenas um `T? content`, em caso de falha na requisição, retorno de erros da API etc., uma exceção será lançada, podendo ser tratada com um `try {} catch(e) {}`.
+A outra variante, sempre nomeada com o nome da comum seguido por "OrThrow", retornará apenas um `T? content`. Em caso de falha na requisição ou retorno de erros da API, uma exceção será lançada, podendo ser tratada com um `try {} catch(e) {}`.
 
 Vejamos um exemplo de uso simples com o método comum:
 
@@ -21,11 +39,11 @@ if (status) {
 }
 ```
 
-Caso o `status` seja verdadeiro, nossa requisição não sofreu nenhum erro, mesmo assim, o conteúdo pode ser nulo, já que a API pode retornar vazio em determinados casos.
+Caso o `status` seja verdadeiro, nossa requisição não sofreu nenhum erro. Mesmo assim, o conteúdo pode ser nulo, já que a API pode retornar vazio em determinados casos.
 
-Em caso de erro na resposta da API, o `status` será falso e a mensagem e a ação retornadas ficarão disponíveis no `error`. Em alguns casos, ambas podem estar vazias.
+Em caso de erro na resposta da API, o `status` será falso, com a mensagem de erro retornada disponível no `error`. Em alguns casos, as mensagens de erro podem ser nulas.
 
-Vejamos, agora, um caso do uso da variante "OrThrow":
+Vejamos um caso do uso da variante "OrThrow":
 
 ```dart
 try {
@@ -35,3 +53,9 @@ try {
   print(error);
 }
 ```
+
+Da mesma maneira, o conteúdo retornado pode ser nulo (caso a API retorne vazio, mas sem erros). No entanto, caso ocorra algum erro ao executar esse método, uma exceção será lançada.
+
+## Explorando todas as rotas da API
+
+###
