@@ -1,14 +1,29 @@
+// ignore_for_file: avoid_print
+
 import 'package:tabnews/tabnews.dart';
 
+final api = TabNews();
+
 void main() async {
-  SimpleTabNews;
+  // await getContents();
+  // await getContentsOrThrow();
+}
 
-  final api = TabNews();
+Future<void> getContents() async {
+  final (contents, status, error) = await api.getContents();
 
-  final (contents, status, error) = await api.getContents(
-    page: ContentPage(10),
-    perPage: ContentPerPage(100),
-  );
+  if (status) {
+    (contents ?? []).forEach(print);
+  } else {
+    print(error);
+  }
+}
 
-  final response = await api.getContentOrThrow("user", "slug");
+Future<void> getContentsOrThrow() async {
+  try {
+    final contents = await api.getContentsOrThrow();
+    (contents ?? []).forEach(print);
+  } catch (error) {
+    print(error);
+  }
 }

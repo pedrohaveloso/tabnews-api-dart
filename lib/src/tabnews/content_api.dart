@@ -14,7 +14,7 @@ extension ContentApi on TabNews {
   ///
   ///     final tabNews = TabNews();
   ///
-  ///     final (status, contents) = await tabNews.getContents();
+  ///     final (status, contents, _) = await tabNews.getContents();
   ///
   ///     if (status && contents != null) {
   ///       contents.forEach(print); // {id: ...} {id: ...} ...
@@ -41,7 +41,7 @@ extension ContentApi on TabNews {
     );
 
     final contents = <Content>[];
-    final decoded = jsonDecode(response.body);
+    final dynamic decoded = jsonDecode(response.body);
     ResponseError? error;
 
     if (response.statusCode == 200 && decoded is List) {
@@ -119,7 +119,7 @@ extension ContentApi on TabNews {
     );
 
     Content? content;
-    final decoded = jsonDecode(response.body);
+    final dynamic decoded = jsonDecode(response.body);
     ResponseError? error;
 
     if (response.statusCode == 200 && decoded is Map<String, dynamic>) {
@@ -187,7 +187,7 @@ extension ContentApi on TabNews {
     );
 
     final contents = <Content>[];
-    final decoded = jsonDecode(response.body);
+    final dynamic decoded = jsonDecode(response.body);
     ResponseError? error;
 
     if (response.statusCode == 200 && decoded is List) {
