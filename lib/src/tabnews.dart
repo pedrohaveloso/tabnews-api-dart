@@ -32,7 +32,7 @@ class TabNews {
   ContentStrategy defaultContentStrategy = ContentStrategy.relevantContent;
 
   ///
-  ContentPerPage defaultContentPerPage = ContentPerPage(20);
+  int defaultContentPerPage = 20;
 
   ResponseError? _getError(dynamic decodedBody) {
     if (decodedBody is Map<String, dynamic>) {
