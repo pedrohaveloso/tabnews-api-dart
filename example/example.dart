@@ -5,15 +5,19 @@ import 'package:tabnews/tabnews.dart';
 final api = TabNews();
 
 void main() async {
-  // await getContents();
+  await getContents();
   // await getContentsOrThrow();
 }
 
 Future<void> getContents() async {
-  final (contents, status, error) = await api.getContents();
+  final (contents, status, error) = await api.getContent(
+    'pedrohaveloso',
+    'criando-uma-api-simples-com-php-puro',
+  );
 
   if (status) {
-    (contents ?? []).forEach(print);
+    print(contents);
+    // (contents ?? []).forEach(print);
   } else {
     print(error);
   }

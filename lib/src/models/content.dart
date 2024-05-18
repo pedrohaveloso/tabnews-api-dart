@@ -11,6 +11,7 @@ class Content {
     this.slug,
     this.title,
     this.status,
+    this.body,
     this.sourceUrl,
     this.createdAt,
     this.updatedAt,
@@ -42,6 +43,7 @@ class Content {
     } else {
       return Content(
         id: map['id'] as String?,
+        body: map['body'] as String?,
         ownerId: map['owner_id'] as String?,
         parentId: map['parent_id'] as String?,
         slug: map['slug'] as String?,
@@ -109,6 +111,9 @@ class Content {
   /// The publication date of the post.
   DateTime? publishedAt;
 
+  /// The body of the post.
+  String? body;
+
   /// The deletion date of the post.
   DateTime? deletedAt;
 
@@ -136,6 +141,7 @@ class Content {
       'slug': slug,
       'title': title,
       'status': status,
+      'body': body,
       'source_url': sourceUrl,
       'created_at': createdAt,
       'updated_at': updatedAt,
