@@ -5,8 +5,6 @@
 library tabnews;
 
 export 'src/models/content.dart';
-export 'src/models/content_page.dart';
-export 'src/models/content_per_page.dart';
 export 'src/models/content_status.dart';
 export 'src/models/content_strategy.dart';
 

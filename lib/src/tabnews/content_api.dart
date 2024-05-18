@@ -20,21 +20,21 @@ extension ContentApi on TabNews {
   ///       contents.forEach(print); // {id: ...} {id: ...} ...
   ///     }
   Future<Response<List<Content>?>> getContents({
-    ContentPage? page,
-    ContentPerPage? perPage,
+    int? page,
+    int? perPage,
     ContentStrategy? strategy,
     String? user,
   }) async {
-    page = page ?? ContentPage(1);
-    perPage = perPage ?? defaultContentPerPage;
     strategy = strategy ?? defaultContentStrategy;
 
     final response = await http.get(
       _apiUrl(
         '/contents${user != null ? '/$user' : ''}',
         queryParameters: {
-          'page': page.toString(),
-          'per_page': perPage.toString(),
+          'page': ContentPage(page ?? 1).toString(),
+          'per_page': ContentPerPage(
+            perPage ?? defaultContentPerPage,
+          ).toString(),
           'strategy': strategy.value,
         },
       ),
@@ -79,8 +79,8 @@ extension ContentApi on TabNews {
   ///       print(error);
   ///     }
   Future<List<Content>?> getContentsOrThrow({
-    ContentPage? page,
-    ContentPerPage? perPage,
+    int? page,
+    int? perPage,
     ContentStrategy? strategy,
     String? user,
   }) async {
